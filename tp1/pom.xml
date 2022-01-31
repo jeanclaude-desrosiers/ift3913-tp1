@@ -13,8 +13,8 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/OWNER/REPOSITORY</url>
+            <name>GitHub jeanclaude-desrosiers Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/jeanclaude-desrosiers/ift3913-tp1</url>
         </repository>
     </distributionManagement>
 </project>
