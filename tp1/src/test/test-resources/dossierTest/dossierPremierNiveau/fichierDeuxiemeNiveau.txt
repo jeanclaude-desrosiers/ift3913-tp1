@@ -1,0 +1,10 @@
+
+/**
+* Test
+*/
+public class fichierDeuxiemeNiveau{
+
+    fichierDeuxiemeNiveau(){
+        System.out.println("code"); //test
+    }
+}

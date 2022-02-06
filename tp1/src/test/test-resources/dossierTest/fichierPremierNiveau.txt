@@ -1,0 +1,11 @@
+package dossierPremierNiveau;
+
+public class fichierPremierNiveau{
+
+    /**
+     * commentaire
+     */
+    fichierPremierNiveau(){
+        System.out.println("code");
+    }
+}
