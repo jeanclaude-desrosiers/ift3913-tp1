@@ -31,7 +31,7 @@ public class ClasseTestComplexite {
         if (i >= 5) {
             doSomethingElse();
 
-            for (var j: this.toString().split(",")) {
+            for (String j: this.toString().split(",")) {
 
             }
         }
