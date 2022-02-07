@@ -10,8 +10,8 @@ public class CsvWriter {
 
     private static final String CLASSE_TITRE = "classes.csv";
     private static final String PAQUET_TITRE = "paquets.csv";
-    private static final String CLASSE_HEADERS = "chemin,classe,classe_LOC,classe_CLOC,classe_DC";
-    private static final String PAQUET_HEADERS = "chemin,paquet,paquet_LOC,paquet_CLOC,paquet_DC";
+    private static final String CLASSE_HEADERS = "chemin,classe,classe_LOC,classe_CLOC,classe_DC,WMC,classe_BC";
+    private static final String PAQUET_HEADERS = "chemin,paquet,paquet_LOC,paquet_CLOC,paquet_DC,WCP,paquet_BC";
 
     /**
      * Créer un rapport csv pour les classes
@@ -37,9 +37,12 @@ public class CsvWriter {
      * @param nbLignesLoc indique le nombre de lignes de code et de commentaires dans l'élément
      * @param nbLignesCloc indique le nombre de lignes de commentaires dans l'élément
      * @param densite indique la densité du code de l'élément
+     * @param complexite indique la complexite du code de l'élément
+     * @param degree indique le degré des commentaires de l'élément
      */
     public static void ecrirePrintWriter(PrintWriter pw,
-                                         String chemin, String nom, int nbLignesLoc, int nbLignesCloc, float densite) {
+                                         String chemin, String nom, int nbLignesLoc, int nbLignesCloc, float densite,
+                                         int complexite, float degree) {
         StringBuilder builder = new StringBuilder();
         builder.append(chemin);
         builder.append(",");
@@ -50,6 +53,10 @@ public class CsvWriter {
         builder.append(nbLignesCloc);
         builder.append(",");
         builder.append(densite);
+        builder.append(",");
+        builder.append(complexite);
+        builder.append(",");
+        builder.append(degree);
         builder.append("\n");
         pw.write(builder.toString());
     }

@@ -1,6 +1,6 @@
 package ift3913.tp1;
 
-import ift3913.tp1.mesures.MesurePaquet;
+import ift3913.tp1.mesure.MesurePaquet;
 import ift3913.tp1.utils.CsvWriter;
 
 import java.io.PrintWriter;

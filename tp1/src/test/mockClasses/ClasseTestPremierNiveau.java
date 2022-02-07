@@ -20,7 +20,7 @@ public class ClasseTestPremierNiveau {
     /**
      * commentaire
      */
-    ClasseTestPremierNiveau (int valeur){
+    public ClasseTestPremierNiveau (int valeur){
         this.attribut1 = valeur;
     }
 }

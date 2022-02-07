@@ -1,6 +1,6 @@
 package mesures;
 
-import ift3913.tp1.mesures.MesurePaquet;
+import ift3913.tp1.mesure.MesurePaquet;
 import ift3913.tp1.model.Paquet;
 import ift3913.tp1.utils.CsvWriter;
 import org.junit.After;
@@ -36,18 +36,20 @@ public class MesurePaquetTest {
     }
 
     @Test
-    public void mesurerPaquet_mockClasses_testDoitRetourner23CommentairesEt41LignesDeCode() {
+    public void mesurerPaquet_mockClasses_testDoitRetourner24CommentairesEt41LignesDeCodeEtComplexite16() {
 
-        Paquet paquet = MesurePaquet.mesurerSubPaquet(dossierTest1, pwClasse, pwClasse);
-        assertEquals(paquet.getNbLignesCloc(),23);
-        assertEquals(paquet.getNbLignesLoc(),41);
+        Paquet paquet = MesurePaquet.mesurerSubPaquet(dossierTest1, pwPaquet, pwClasse);
+        assertEquals(paquet.getNbLignesCloc(),24);
+        assertEquals(paquet.getNbLignesLoc(),78);
+        assertEquals(paquet.getComplexite(),16);
     }
 
     @Test
-    public void mesurerPaquet_deuxiemeNiveau_testDoitRetourner8CommentairesEt19LignesDeCode() {
+    public void mesurerPaquet_deuxiemeNiveau_testDoitRetourner8CommentairesEt19LignesDeCodeEtComplexite1() {
 
-        Paquet paquet = MesurePaquet.mesurerSubPaquet(dossierTest2, pwClasse, pwClasse);
+        Paquet paquet = MesurePaquet.mesurerSubPaquet(dossierTest2, pwPaquet, pwClasse);
         assertEquals(paquet.getNbLignesCloc(),8);
         assertEquals(paquet.getNbLignesLoc(),19);
+        assertEquals(paquet.getComplexite(),1);
     }
 }

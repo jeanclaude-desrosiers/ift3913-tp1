@@ -1,4 +1,4 @@
-package ift3913.tp1.mesures;
+package ift3913.tp1.mesure;
 
 import ift3913.tp1.utils.CsvWriter;
 import ift3913.tp1.utils.LecteurFichier;
@@ -29,6 +29,7 @@ public class MesurePaquet {
     public static Paquet mesurerSubPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
         int nbLignesCloc = 0;
         int nbLignesLoc = 0;
+        int complexite = 0;
 
         List<Path> cheminsFichiers = LecteurFichier.obtenirListeFichiers(chemin);
 
@@ -40,28 +41,36 @@ public class MesurePaquet {
                 Paquet paquet = mesurerSubPaquet(path.toAbsolutePath().toString(), paquets, classes);
                 nbLignesCloc += paquet.getNbLignesCloc();
                 nbLignesLoc += paquet.getNbLignesLoc();
+                complexite += paquet.getComplexite();
             }
             if(f.isFile() && f.getName().contains(JAVA_EXTENSION)) {
                 nbLignesCloc += MesureClasse.classe_CLOC(path.toString());
                 nbLignesLoc += MesureClasse.classe_LOC(path.toString());
+                complexite += MesureClasse.classe_WMC(path.toString());
+                float densite = MesureClasse.classe_DC(nbLignesCloc, nbLignesLoc);
                 CsvWriter.ecrirePrintWriter(classes, path.toString(),
-                        f.getName(), nbLignesLoc, nbLignesCloc, densite(nbLignesCloc, nbLignesLoc));
+                        f.getName(), nbLignesLoc, nbLignesCloc, densite, complexite,
+                        MesureClasse.classe_DC(densite, complexite));
             }
         }
         String nomDirectory = new File(chemin).getName();
+        float densite = MesureClasse.classe_DC(nbLignesCloc, nbLignesLoc);
         CsvWriter.ecrirePrintWriter(paquets, chemin,
-                nomDirectory, nbLignesLoc, nbLignesCloc, densite(nbLignesCloc, nbLignesLoc));
+                nomDirectory, nbLignesLoc, nbLignesCloc, densite, complexite, paquet_DC(densite, complexite));
 
-        return new Paquet(nbLignesLoc, nbLignesCloc);
+        return new Paquet(nbLignesLoc, nbLignesCloc, complexite);
     }
 
-    private static float densite (float lignesCloc, float lignesLoc) {
+    /**
+     * Calcul la densité d'un paquet
+     * @param lignesCloc nombre de lignes commentaires
+     * @param lignesLoc nombre de lignes code + commentaires
+     * @return la densité du paquet
+     */
+    public static float paquet_DC (float lignesCloc, float lignesLoc) {
         if(lignesLoc != 0)
             return lignesCloc / lignesLoc;
         else
             return 0;
     }
-
-
-
 }

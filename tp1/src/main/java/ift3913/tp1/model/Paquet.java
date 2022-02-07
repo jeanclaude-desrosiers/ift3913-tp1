@@ -7,15 +7,17 @@ public class Paquet {
 
     private int nbLignesCloc;
     private int nbLignesLoc;
+    private int complexite;
 
     /**
      * Constructeur
      * @param nbLignesLoc nombre de lignes de code + commentaires
      * @param nbLignesCloc nombre de lignes de commentaires
      */
-    public Paquet(int nbLignesLoc, int nbLignesCloc) {
+    public Paquet(int nbLignesLoc, int nbLignesCloc, int complexite) {
         this.nbLignesCloc = nbLignesCloc;
         this.nbLignesLoc = nbLignesLoc;
+        this.complexite = complexite;
     }
 
     /**
@@ -35,6 +37,14 @@ public class Paquet {
     }
 
     /**
+     * Getter
+     * @return la complexite
+     */
+    public int getComplexite() {
+        return complexite;
+    }
+
+    /**
      * Setter
      * @param nbLignesCloc nombre de lignes commentaires
      */
@@ -48,5 +58,13 @@ public class Paquet {
      */
     public void setNbLignesLoc(int nbLignesLoc) {
         this.nbLignesLoc = nbLignesLoc;
+    }
+
+    /**
+     * Setter
+     * @param complexite
+     */
+    public void setComplexite(int complexite) {
+        this.complexite = complexite;
     }
 }

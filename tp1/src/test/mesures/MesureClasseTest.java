@@ -1,6 +1,6 @@
 package mesures;
 
-import ift3913.tp1.mesures.MesureClasse;
+import ift3913.tp1.mesure.MesureClasse;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,6 +12,9 @@ public class MesureClasseTest {
 
     private String fichierTest2 =  System.getProperty("user.dir") +
             "/src/test/mockClasses/deuxiemeNiveau/ClasseTestDeuxiemeNiveau.java";
+
+    private String fichierTestComplexite =  System.getProperty("user.dir") +
+            "/src/test/mockClasses/ClasseTestComplexite.java";
 
     @Test
     public void mesureCLOC_surFichier1_testDoitRetourner15Commentaires() {
@@ -39,5 +42,12 @@ public class MesureClasseTest {
 
         int nbCommentaires = MesureClasse.classe_LOC(fichierTest2);
         assertEquals(nbCommentaires,19);
+    }
+
+    @Test
+    public void mesureWMC_surFichierComplexite_testDoitRetournerComplexite14() {
+
+        int nbCommentaires = MesureClasse.classe_WMC(fichierTestComplexite);
+        assertEquals(nbCommentaires,14);
     }
 }

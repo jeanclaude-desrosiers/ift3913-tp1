@@ -1,4 +1,4 @@
-package ift3913.tp1.mesures;
+package ift3913.tp1.mesure;
 
 import ift3913.tp1.utils.LecteurFichier;
 
@@ -36,7 +36,19 @@ public class MesureClasse {
     private static final String REGEX_CAS_UNIQUE =
             "\\/\\*[^\\*].*[^\\*][^\\/]$|\\/\\*[ \\t]*$";
 
+    // Regex qui identifie les déclarations de méthodes
+    private static final String REGEX_METHODE =
+            "(public|protected|private|static|\\s) +[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;])";
+
+    // Regex qui identifie les for, while, do...while, switch, catch
+    private static final String REGEX_CONDITIONS =
+            "[ \\t]*if[ \\t\\r\\n]*\\(|[ \\t]*while[ \\t\\r\\n]*\\(|" +
+                    "[ \\t]*do[ \\t\\r\\n]*\\{[ \\t\\r\\n].*[ \\t\\r\\n]*\\}[ \\t\\r\\n]*while|" +
+                    "[ \\t]*case[ \\t\\r\\n]*[\\w]+:|[ \\t]*default[ \\t\\r\\n]*:|[ \\t]*for[ \\t\\r\\n]*\\(|" +
+                    "[ \\t]*catch[ \\t\\r\\n]*\\(";
+
     private static final String FIN_DE_COMMENTAIRE = "*/";
+
 
     /**
      *
@@ -84,7 +96,7 @@ public class MesureClasse {
 
     /**
      *
-     * @param path du fichier à analyser
+     * @param path du fichier java à analyser
      * @return nombre de commentaires uniquement dans le code
      */
     public static int classe_CLOC (String path) {
@@ -122,6 +134,56 @@ public class MesureClasse {
         }
 
         return nbCommentaires;
+    }
+
+    /**
+     * Calcul la densité d'une classe
+     * @param lignesCloc nombre de lignes commentaires
+     * @param lignesLoc nombre de lignes code + commentaires
+     * @return la densité de la classe
+     */
+    public static float classe_DC (float lignesCloc, float lignesLoc) {
+        if(lignesLoc != 0)
+            return lignesCloc / lignesLoc;
+        else
+            return 0;
+    }
+
+    /**
+     * Calcule le WMC d'une classe
+     * @param path du fichier java à analyser
+     * @return la complexité de la classe
+     */
+    public static int classe_WMC(String path) {
+        int complexite = 0;
+        String ligne = "";
+        StringBuilder fichier = new StringBuilder();
+
+        try {
+            BufferedReader br = LecteurFichier.ouvertureFichier(path);
+            if (br == null) return 0;
+            while ((ligne = br.readLine()) != null) {
+                fichier.append(ligne);
+            }
+
+            Pattern regex = Pattern.compile(REGEX_METHODE);
+            Matcher matcher = regex.matcher(fichier.toString());
+            while (matcher.find()) {
+                complexite++;
+            }
+
+            regex = Pattern.compile(REGEX_CONDITIONS);
+            matcher = regex.matcher(fichier.toString());
+            while (matcher.find()) {
+
+                complexite++;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return complexite;
     }
 
     private static boolean matchRegex(String regexAMatcher, String ligne) {
