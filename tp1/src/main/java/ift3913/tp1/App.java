@@ -1,6 +1,9 @@
 package ift3913.tp1;
 
-import ift3913.tp1.mesures.MesureClasse;
+import ift3913.tp1.mesures.MesurePaquet;
+import ift3913.tp1.utils.CsvWriter;
+
+import java.io.PrintWriter;
 
 /**
  *
@@ -9,6 +12,13 @@ import ift3913.tp1.mesures.MesureClasse;
  */
 public class App {
     public static void main(String[] args) {
-//        MesureClasse.classe_LOC()
+
+        PrintWriter fichierCsvPaquets = CsvWriter.creerFichierCSVpourPaquets();
+        PrintWriter fichierCsvClasses = CsvWriter.creerFichierCSVpourClasses();
+
+        MesurePaquet.mesurerPaquet(args[0], fichierCsvPaquets, fichierCsvClasses);
+
+        fichierCsvClasses.close();
+        fichierCsvPaquets.close();
     }
 }

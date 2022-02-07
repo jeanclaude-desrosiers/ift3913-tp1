@@ -1,11 +1,15 @@
 package ift3913.tp1.mesures;
 
+import ift3913.tp1.utils.LecteurFichier;
+
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Classe qui contient les mesures en lien avec les classes java
+ */
 public class MesureClasse {
 
     /*
@@ -14,7 +18,7 @@ public class MesureClasse {
         Cas 3: /* comentaire * / -ou- espace /* commentaire * / -ou- code puis /* commentaire * /
      */
     private static final String REGEX_TOUT_COMMENTAIRE =
-            "[ \\t]*\\/\\/.*|\\/\\*.*\\*\\/|^[ \\t]*\\/\\*\\*|^[ \\t]*\\*[^\\*\\/]|\\*\\/";
+            "[ \\t]*\\/\\/.*|\\/\\*.*\\*\\/|^[ \\t]*\\/\\*\\*|^[ \\t]*\\*[^\\*\\/]|\\*\\/[ \\t]*$|^[ \\t]*\\*[ \\t]*$";
 
     /*
         Cas 1: // commentaire -ou- Espace puis // commentaire
@@ -45,34 +49,32 @@ public class MesureClasse {
         boolean blocCommentaire = false;
 
         try {
-            FileReader fichier = new FileReader(path);
-            BufferedReader br = new BufferedReader(fichier);
-            while((ligne = br.readLine()) != null) {
+            BufferedReader br = LecteurFichier.ouvertureFichier(path);
+            if(br == null) return 0;
+            while ((ligne = br.readLine()) != null) {
 
-                if(!blocCommentaire) {
+                if (!blocCommentaire) {
 
                     if (ligne.trim().isEmpty())
                         continue;
 
-                    if(matchRegex(REGEX_TOUT_COMMENTAIRE, ligne))
+                    if (matchRegex(REGEX_TOUT_COMMENTAIRE, ligne))
                         nbLignesCode++;
 
-                    if(!matchRegex(REGEX_UNIQUEMENT_COMMENTAIRE, ligne))
+                    if (!matchRegex(REGEX_UNIQUEMENT_COMMENTAIRE, ligne))
                         nbLignesCode++;
 
                     if (matchRegex(REGEX_CAS_UNIQUE, ligne) && !ligne.contains(FIN_DE_COMMENTAIRE)) {
                         blocCommentaire = true;
                         nbLignesCode++;
                     }
-                }
-                else {
+                } else {
                     nbLignesCode++;
                     if (ligne.contains(FIN_DE_COMMENTAIRE))
                         blocCommentaire = false;
                 }
 
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,8 +93,8 @@ public class MesureClasse {
         boolean blocCommentaire = false;
 
         try {
-            FileReader fichier = new FileReader(path);
-            BufferedReader br = new BufferedReader(fichier);
+            BufferedReader br = LecteurFichier.ouvertureFichier(path);
+            if(br == null) return 0;
             while((ligne = br.readLine()) != null) {
 
                 if(!blocCommentaire) {
@@ -120,10 +122,6 @@ public class MesureClasse {
         }
 
         return nbCommentaires;
-    }
-
-    public static float classe_DC(float loc, float cloc) {
-        return cloc / loc;
     }
 
     private static boolean matchRegex(String regexAMatcher, String ligne) {

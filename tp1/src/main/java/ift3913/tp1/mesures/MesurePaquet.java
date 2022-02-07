@@ -1,59 +1,67 @@
 package ift3913.tp1.mesures;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import ift3913.tp1.utils.CsvWriter;
+import ift3913.tp1.utils.LecteurFichier;
+import ift3913.tp1.model.Paquet;
 
+import java.io.File;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.util.List;
+
+/**
+ * Classe qui contient les mesures des paquets
+ */
 public class MesurePaquet {
 
-    public static int paquet_LOC (String chemin) {
-        int nbLignes = 0;
+    private static final String JAVA_EXTENSION = ".java";
 
-        List<Path> cheminsFichiers = obtenirListeFichiers(chemin);
+    /**
+     * Lance l'application des mesure récursivement à travers tous les paquets d'un dossier
+     * @param chemin racine, début de l'analyse
+     * @param paquets le fichier csv paquets à mettre à jour
+     * @param classes le fichier csv classes à mettre à jour
+     */
+    public static void mesurerPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
+        mesurerSubPaquet(chemin, paquets, classes);
+    }
+
+    public static Paquet mesurerSubPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
+        int nbLignesCloc = 0;
+        int nbLignesLoc = 0;
+
+        List<Path> cheminsFichiers = LecteurFichier.obtenirListeFichiers(chemin);
+
+        cheminsFichiers.remove(0);
 
         for (Path path: cheminsFichiers) {
-            File f = new File(path.toAbsolutePath().toString());
-            if (f.isFile()) {
-                nbLignes += MesureClasse.classe_LOC(path.toAbsolutePath().toString());
+            File f = new File(path.toString());
+            if(f.isDirectory()) {
+                Paquet paquet = mesurerSubPaquet(path.toAbsolutePath().toString(), paquets, classes);
+                nbLignesCloc += paquet.getNbLignesCloc();
+                nbLignesLoc += paquet.getNbLignesLoc();
+            }
+            if(f.isFile() && f.getName().contains(JAVA_EXTENSION)) {
+                nbLignesCloc += MesureClasse.classe_CLOC(path.toString());
+                nbLignesLoc += MesureClasse.classe_LOC(path.toString());
+                CsvWriter.ecrirePrintWriter(classes, path.toString(),
+                        f.getName(), nbLignesLoc, nbLignesCloc, densite(nbLignesCloc, nbLignesLoc));
             }
         }
+        String nomDirectory = new File(chemin).getName();
+        CsvWriter.ecrirePrintWriter(paquets, chemin,
+                nomDirectory, nbLignesLoc, nbLignesCloc, densite(nbLignesCloc, nbLignesLoc));
 
-        return nbLignes;
+        return new Paquet(nbLignesLoc, nbLignesCloc);
     }
 
-    public static int paquet_CLOC (String chemin) {
-        int nbLignes = 0;
-
-        List<Path> cheminsFichiers = obtenirListeFichiers(chemin);
-
-        for (Path path: cheminsFichiers) {
-            File f = new File(path.toAbsolutePath().toString());
-            if(f.isFile()) {
-                nbLignes += MesureClasse.classe_CLOC(path.toAbsolutePath().toString());
-            }
-        }
-
-        return nbLignes;
+    private static float densite (float lignesCloc, float lignesLoc) {
+        if(lignesLoc != 0)
+            return lignesCloc / lignesLoc;
+        else
+            return 0;
     }
 
-    public static float paquet_DC (float loc, float cloc) {
-        return cloc / loc;
-    }
 
-    private static List<Path> obtenirListeFichiers (String path) {
-        List<Path> cheminsFichiers = new ArrayList<>();
 
-        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
-            cheminsFichiers = paths.collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return cheminsFichiers;
-    }
 }
