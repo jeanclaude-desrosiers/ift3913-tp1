@@ -7,9 +7,9 @@ import java.util.Collection;
  *
  * @author jclaude
  */
-public class PackageMeasureLOC extends PackageMeasure {
+public class PackageMeasureExample extends PackageMeasure {
 
-    public PackageMeasureLOC() {
+    public PackageMeasureExample() {
         super("paquet_LOC");
     }
 
@@ -26,7 +26,7 @@ public class PackageMeasureLOC extends PackageMeasure {
 
     @Override
     public ClassMeasure getClassMeasure() {
-        return new ClassMeasureLOC();
+        return new ClassMeasureExample();
     }
     
 }

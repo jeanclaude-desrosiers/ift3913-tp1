@@ -4,11 +4,11 @@ package ift3913.tp1.measure;
  *
  * @author jclaude
  */
-public class ClassMeasureLOC extends ClassMeasure {
+public class ClassMeasureExample extends ClassMeasure {
 
     private int count;
 
-    public ClassMeasureLOC() {
+    public ClassMeasureExample() {
         super("classe_LOC");
 
         count = 0;

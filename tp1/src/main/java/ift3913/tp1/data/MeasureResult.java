@@ -3,7 +3,7 @@ package ift3913.tp1.data;
 import java.nio.file.Path;
 
 /**
- * A simple data object holding the result of a measure
+ * A simple data object holding the result of a measure.
  *
  * @author jclaude
  */
@@ -71,11 +71,11 @@ public class MeasureResult {
 
     @Override
     public String toString() {
-        return "MeasureResult{" +
-                "name=" + name +
-                ", path=" + path +
-                ", description=" + description +
-                ", numericResult=" + numericResult + '}';
+        return "MeasureResult{"
+                + "name=" + name
+                + ", path=" + path
+                + ", description=" + description
+                + ", numericResult=" + numericResult + '}';
     }
 
 }

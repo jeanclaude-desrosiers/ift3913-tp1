@@ -9,12 +9,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Explores a Java project by running a suite of measures on its
+ * packages/classes
  *
  * @author jclaude
  */
@@ -27,9 +28,16 @@ public class ProjectExplorer {
 
     public ProjectExplorer(Path basePath) {
         this.basePath = basePath.toAbsolutePath().normalize();
-        measureSuite = MeasureSuite.ALL;
+        measureSuite = MeasureSuite.EXAMPLE;
     }
 
+    /**
+     * Explores the Java project pointed by this ProjectExplorer's basePath.
+     * Recursively goes through every directory in the project, and runs the
+     * MeasureSuite on every directory that's a Java package
+     *
+     * @return All of the collected MeasureResults
+     */
     public Collection<MeasureResult> explore() {
         Collection<MeasureResult> measureResults = new ArrayList<>();
         Deque<Path> directoryDeque = new ArrayDeque<>();
@@ -57,6 +65,12 @@ public class ProjectExplorer {
         return measureResults;
     }
 
+    /**
+     * Checks if a given directory contains at least one *.java file
+     *
+     * @param path directory to check
+     * @return true if at least one Java file, false otherwise
+     */
     public boolean isJavaPackage(Path path) {
         try {
             return Files.list(path)
