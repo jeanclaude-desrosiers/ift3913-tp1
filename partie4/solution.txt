@@ -1,0 +1,9 @@
+Les paquets les moins bien commentés sont:
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\flow					Densité 26%
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\pie					Densité 27%
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\data\category					Densité 29%
+
+Les classes les moins bien commentés sont:
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\main\java\module-info.java						Densité: 7%
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\renderer\AbstractRendererTest.java		Densité: 20%
+C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\CategoryPlotTest.java			Densité: 22%
