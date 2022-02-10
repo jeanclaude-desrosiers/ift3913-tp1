@@ -46,7 +46,7 @@ public class ProjectExplorer {
         Path nextDirectory;
         while ((nextDirectory = directoryDeque.pollFirst()) != null) {
             if (isJavaPackage(nextDirectory)) {
-                LOGGER.info("Java Package [" + basePath.relativize(nextDirectory) + "]");
+                LOGGER.trace("Java Package [" + basePath.relativize(nextDirectory) + "]");
 
                 measureResults.addAll(measureSuite.runSuite(basePath, basePath.relativize(nextDirectory)));
             }

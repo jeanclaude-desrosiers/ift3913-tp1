@@ -1,6 +1,7 @@
 package ift3913.tp1.measure;
 
 import ift3913.tp1.data.MeasureResult;
+import ift3913.tp1.data.MeasureResultType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,9 +18,9 @@ import org.slf4j.Logger;
  * @author jclaude
  */
 public abstract class PackageMeasure extends Measure {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageMeasure.class);
-
+    
     public PackageMeasure(String name) {
         super(name);
     }
@@ -35,7 +36,7 @@ public abstract class PackageMeasure extends Measure {
     public final Collection<MeasureResult> measure(Path projectPath, Path path) {
         Path fullPath = projectPath.resolve(path);
         Collection<MeasureResult> measureResults = new ArrayList<>();
-
+        
         if (Files.isDirectory(fullPath)) {
             try {
                 // First measured all files which are Java classes ...
@@ -51,13 +52,14 @@ public abstract class PackageMeasure extends Measure {
                 MeasureResult packageMeasureResult = aggregate(classMeasureResults)
                         .withName(getName())
                         .withPath(path)
-                        .withDescription(getPackageDescription(path));
+                        .withDescription(getPackageDescription(path))
+                        .withType(MeasureResultType.PACKAGE);
                 measureResults.add(packageMeasureResult);
             } catch (IOException ex) {
                 LOGGER.error("Could not list files", ex);
             }
         }
-
+        
         return measureResults;
     }
 
@@ -69,11 +71,11 @@ public abstract class PackageMeasure extends Measure {
      */
     private String getPackageDescription(Path path) {
         StringBuilder packageDescription = new StringBuilder();
-
+        
         path.iterator().forEachRemaining(section -> {
             packageDescription.append(section.toString()).append('.');
         });
-
+        
         return packageDescription.substring(0, packageDescription.length() - 1);
     }
 

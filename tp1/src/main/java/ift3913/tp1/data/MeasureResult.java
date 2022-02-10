@@ -25,6 +25,10 @@ public class MeasureResult {
      * Numeric result of the measure on the object
      */
     private Number numericResult;
+    /**
+     * Type of object measured
+     */
+    private MeasureResultType type;
 
     public MeasureResult() {
     }
@@ -66,6 +70,16 @@ public class MeasureResult {
     public MeasureResult withNumericResult(Number numericResult) {
         this.numericResult = numericResult;
 
+        return this;
+    }
+
+    public MeasureResultType getType() {
+        return type;
+    }
+
+    public MeasureResult withType(MeasureResultType type) {
+        this.type = type;
+        
         return this;
     }
 

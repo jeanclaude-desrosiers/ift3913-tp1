@@ -1,6 +1,7 @@
 package ift3913.tp1.measure;
 
 import ift3913.tp1.data.MeasureResult;
+import ift3913.tp1.data.MeasureResultType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +32,8 @@ public abstract class ClassMeasure extends Measure {
         MeasureResult measureResult = new MeasureResult()
                 .withName(getName())
                 .withPath(path)
-                .withDescription(getClassDescription(path));
+                .withDescription(getClassDescription(path))
+                .withType(MeasureResultType.CLASS);
 
         try {
             Path fullPath = projectPath.resolve(path);
