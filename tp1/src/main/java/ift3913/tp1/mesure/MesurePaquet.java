@@ -1,20 +1,27 @@
 package ift3913.tp1.mesure;
 
+import ift3913.tp1.model.Element;
 import ift3913.tp1.utils.CsvWriter;
-import ift3913.tp1.utils.LecteurFichier;
-import ift3913.tp1.model.Paquet;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Classe qui contient les mesures des paquets
  */
 public class MesurePaquet {
 
-    private static final String JAVA_EXTENSION = ".java";
+    private final String JAVA_EXTENSION = ".java";
+
+    private MesureClasse mesureClasse = new MesureClasse();
 
     /**
      * Lance l'application des mesure récursivement à travers tous les paquets d'un dossier
@@ -22,55 +29,58 @@ public class MesurePaquet {
      * @param paquets le fichier csv paquets à mettre à jour
      * @param classes le fichier csv classes à mettre à jour
      */
-    public static void mesurerPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
-        mesurerSubPaquet(chemin, paquets, classes);
+    public void mesurerPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
+        mesurerSousPaquet(chemin, paquets, classes);
     }
 
-    public static Paquet mesurerSubPaquet (String chemin, PrintWriter paquets, PrintWriter classes) {
-        int nbLignesCloc = 0;
-        int nbLignesLoc = 0;
-        int complexite = 0;
+    public Element mesurerSousPaquet(String chemin, PrintWriter paquetsWriter, PrintWriter classesWriter) {
+        Element paquet = new Element();
 
-        List<Path> cheminsFichiers = LecteurFichier.obtenirListeFichiers(chemin);
+        List<Path> cheminsFichiers = obtenirListeDesElementsEnfants(chemin);
 
         cheminsFichiers.remove(0);
 
         for (Path path: cheminsFichiers) {
             File f = new File(path.toString());
             if(f.isDirectory()) {
-                Paquet paquet = mesurerSubPaquet(path.toAbsolutePath().toString(), paquets, classes);
-                nbLignesCloc += paquet.getNbLignesCloc();
-                nbLignesLoc += paquet.getNbLignesLoc();
-                complexite += paquet.getComplexite();
+                Element sousPaquet = mesurerSousPaquet(path.toAbsolutePath().toString(), paquetsWriter, classesWriter);
+                ajoutInformations(paquet, sousPaquet);
             }
             if(f.isFile() && f.getName().contains(JAVA_EXTENSION)) {
-                nbLignesCloc += MesureClasse.classe_CLOC(path.toString());
-                nbLignesLoc += MesureClasse.classe_LOC(path.toString());
-                complexite += MesureClasse.classe_WMC(path.toString());
-                float densite = MesureClasse.classe_DC(nbLignesCloc, nbLignesLoc);
-                CsvWriter.ecrirePrintWriter(classes, path.toString(),
-                        f.getName(), nbLignesLoc, nbLignesCloc, densite, complexite,
-                        MesureClasse.classe_DC(densite, complexite));
+                Element sousClasse = mesureClasse.mesurerClasse(path.toAbsolutePath().toString(), f.getName());
+                ajoutInformations(paquet, sousClasse);
+                CsvWriter.ecrirePrintWriter(classesWriter, sousClasse);
             }
         }
-        String nomDirectory = new File(chemin).getName();
-        float densite = MesureClasse.classe_DC(nbLignesCloc, nbLignesLoc);
-        CsvWriter.ecrirePrintWriter(paquets, chemin,
-                nomDirectory, nbLignesLoc, nbLignesCloc, densite, complexite, paquet_DC(densite, complexite));
+        paquet.setNom(new File(chemin).getName());
+        paquet.setChemin(chemin);
+        paquet.calculeDensite();
+        paquet.calculeDegreCommentaire();
+        CsvWriter.ecrirePrintWriter(paquetsWriter, paquet);
 
-        return new Paquet(nbLignesLoc, nbLignesCloc, complexite);
+        return paquet;
     }
 
     /**
-     * Calcul la densité d'un paquet
-     * @param lignesCloc nombre de lignes commentaires
-     * @param lignesLoc nombre de lignes code + commentaires
-     * @return la densité du paquet
+     * Trouve les chemins de tous les elements enfants de profondeur 1
+     * @param path chemin du fichier
+     * @return liste de tous les chemins trouvés
      */
-    public static float paquet_DC (float lignesCloc, float lignesLoc) {
-        if(lignesLoc != 0)
-            return lignesCloc / lignesLoc;
-        else
-            return 0;
+    private List<Path> obtenirListeDesElementsEnfants(String path) {
+        List<Path> cheminsFichiers = new ArrayList<>();
+
+        try (Stream<Path> paths = Files.walk(Paths.get(path), 1)) {
+            cheminsFichiers = paths.collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cheminsFichiers;
+    }
+
+    private Element ajoutInformations (Element elementParent, Element elementEnfant) {
+        elementParent.ajoutCloc(elementEnfant.getNbLignesCloc());
+        elementParent.ajoutLoc(elementEnfant.getNbLignesLoc());
+        elementParent.augmenteComplexite(elementEnfant.getComplexite());
+        return elementParent;
     }
 }

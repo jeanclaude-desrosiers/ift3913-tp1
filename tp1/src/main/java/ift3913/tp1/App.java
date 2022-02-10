@@ -16,7 +16,8 @@ public class App {
         PrintWriter fichierCsvPaquets = CsvWriter.creerFichierCSVpourPaquets();
         PrintWriter fichierCsvClasses = CsvWriter.creerFichierCSVpourClasses();
 
-        MesurePaquet.mesurerPaquet(args[0], fichierCsvPaquets, fichierCsvClasses);
+        MesurePaquet mesurePaquet = new MesurePaquet();
+        mesurePaquet.mesurerPaquet(args[0], fichierCsvPaquets, fichierCsvClasses);
 
         fichierCsvClasses.close();
         fichierCsvPaquets.close();

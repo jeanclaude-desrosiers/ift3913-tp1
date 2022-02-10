@@ -1,53 +1,57 @@
 package mesures;
 
 import ift3913.tp1.mesure.MesureClasse;
+import ift3913.tp1.model.Element;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class MesureClasseTest {
 
-    private String fichierTest1 =  System.getProperty("user.dir") +
+    private final MesureClasse mesureClasse = new MesureClasse();
+
+    private final String fichierTest1 =  System.getProperty("user.dir") +
             "/src/test/mockClasses/ClasseTestPremierNiveau.java";
 
-    private String fichierTest2 =  System.getProperty("user.dir") +
+    private final String fichierTest2 =  System.getProperty("user.dir") +
             "/src/test/mockClasses/deuxiemeNiveau/ClasseTestDeuxiemeNiveau.java";
 
-    private String fichierTestComplexite =  System.getProperty("user.dir") +
+    private final String fichierTestComplexite =  System.getProperty("user.dir") +
             "/src/test/mockClasses/ClasseTestComplexite.java";
 
     @Test
-    public void mesureCLOC_surFichier1_testDoitRetourner15Commentaires() {
+    public void mesurerClasse_surFichier1_testDoitRetourner15ClocEt22Loc() {
 
-        int nbCommentaires = MesureClasse.classe_CLOC(fichierTest1);
-        assertEquals(nbCommentaires,15);
+        Element element = mesureClasse.mesurerClasse(fichierTest1, "ClasseTestPremierNiveau.java");
+
+        assertEquals(element.getChemin(), fichierTest1);
+        assertEquals(element.getNom(), "ClasseTestPremierNiveau.java");
+        assertEquals(element.getNbLignesCloc(),15);
+        assertEquals(element.getNbLignesLoc(), 22);
+        assertEquals(element.getComplexite(), 1);
     }
 
     @Test
-    public void mesureLOC_surFichier1_testDoitRetourner22Lignes() {
+    public void mesurerClasse_surFichier2_testDoitRetourner8ClocEt19Loc() {
 
-        int nbCommentaires = MesureClasse.classe_LOC(fichierTest1);
-        assertEquals(nbCommentaires,22);
-    }
+        Element element = mesureClasse.mesurerClasse(fichierTest2, "ClasseTestDeuxiemeNiveau.java");
 
-    @Test
-    public void mesureCLOC_surFichier2_testDoitRetourner8Commentaires() {
-
-        int nbCommentaires = MesureClasse.classe_CLOC(fichierTest2);
-        assertEquals(nbCommentaires,8);
-    }
-
-    @Test
-    public void mesureLOC_surFichier2_testDoitRetourner19Lignes() {
-
-        int nbCommentaires = MesureClasse.classe_LOC(fichierTest2);
-        assertEquals(nbCommentaires,19);
+        assertEquals(element.getChemin(), fichierTest2);
+        assertEquals(element.getNom(), "ClasseTestDeuxiemeNiveau.java");
+        assertEquals(element.getNbLignesCloc(),8);
+        assertEquals(element.getNbLignesLoc(), 19);
+        assertEquals(element.getComplexite(), 1);
     }
 
     @Test
     public void mesureWMC_surFichierComplexite_testDoitRetournerComplexite14() {
 
-        int nbCommentaires = MesureClasse.classe_WMC(fichierTestComplexite);
-        assertEquals(nbCommentaires,14);
+        Element element = mesureClasse.mesurerClasse(fichierTestComplexite, "ClasseTestComplexite.java");
+
+        assertEquals(element.getChemin(), fichierTestComplexite);
+        assertEquals(element.getNom(), "ClasseTestComplexite.java");
+        assertEquals(element.getNbLignesCloc(),1);
+        assertEquals(element.getNbLignesLoc(), 37);
+        assertEquals(element.getComplexite(), 14);
     }
 }
