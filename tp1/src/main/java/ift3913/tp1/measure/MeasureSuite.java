@@ -11,7 +11,8 @@ import java.util.Collection;
  * @author jclaude
  */
 public enum MeasureSuite {
-    EXAMPLE(new PackageMeasureExample());
+    EXAMPLE(new PackageMeasureExample()),
+    ALL(new PackageMeasureCLOC());
 
     private final PackageMeasure[] packageMeasures;
 

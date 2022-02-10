@@ -9,8 +9,6 @@ import java.util.List;
  */
 public final class Parser {
 
-    public static final Parser INSTANCE = new Parser();
-
     private Parser() {
 
     }
@@ -51,6 +49,7 @@ public final class Parser {
                      * a // means the rest of the line is just a comment.
                      */
                     tokens.add(token.toString() + line.substring(i));
+                    token.setLength(0);
                     break;
                 } else if (!inComment && getLast(previous, 2).equals("/*")) {
                     inComment = true;
@@ -75,7 +74,7 @@ public final class Parser {
                     if (token.length() > 0) {
                         isTokenDone = true;
                     }
-                } else if (Character.isLetter(current)) {
+                } else if (Character.isLetterOrDigit(current)) {
                     token.append(current);
                 } else {
                     isTokenDone = true;
@@ -98,6 +97,11 @@ public final class Parser {
                 // Clearing the StringBuilder in-place
                 token.setLength(0);
             }
+        }
+
+        // Add the last token if there is one
+        if (token.length() > 0) {
+            tokens.add(token.toString());
         }
 
         return tokens;

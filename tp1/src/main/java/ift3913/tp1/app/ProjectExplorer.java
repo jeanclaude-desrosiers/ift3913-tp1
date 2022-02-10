@@ -26,9 +26,9 @@ public class ProjectExplorer {
     private final Path basePath;
     private final MeasureSuite measureSuite;
 
-    public ProjectExplorer(Path basePath) {
+    public ProjectExplorer(Path basePath, MeasureSuite measureSuite) {
         this.basePath = basePath.toAbsolutePath().normalize();
-        measureSuite = MeasureSuite.EXAMPLE;
+        this.measureSuite = measureSuite;
     }
 
     /**

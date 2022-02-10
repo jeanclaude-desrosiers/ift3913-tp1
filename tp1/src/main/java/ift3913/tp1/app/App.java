@@ -49,8 +49,9 @@ public class App {
         ArgumentParser parser = ArgumentParsers.newFor("tp1").build();
 
         parser.addArgument("-m", "--measures")
+                .dest("measure_suite")
                 .type(MeasureSuite.class)
-                .setDefault(MeasureSuite.EXAMPLE)
+                .setDefault(MeasureSuite.ALL)
                 .help("Select a set of measures to run");
 
         parser.addArgument("project_path")
@@ -78,8 +79,9 @@ public class App {
 
     private static void run(Namespace namespace) {
         // Various setup
-        Path projectPath = (Path) namespace.get("project_path");
-        ProjectExplorer projectExplorer = new ProjectExplorer(projectPath);
+        Path projectPath = namespace.get("project_path");
+        MeasureSuite measureSuite = namespace.get("measure_suite");
+        ProjectExplorer projectExplorer = new ProjectExplorer(projectPath, measureSuite);
 
         Path classMeasurePath = Paths.get(namespace.get("dir"),
                 namespace.get("suffix") + "classes.csv");
