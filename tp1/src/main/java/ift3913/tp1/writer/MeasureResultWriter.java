@@ -14,7 +14,8 @@ public interface MeasureResultWriter {
     /**
      * Writes all the MeasureResults
      *
-     * @param measureResults
+     * @param measureResults results to write
+     * @param type type for all the measureResults
      */
     public void write(Collection<MeasureResult> measureResults, MeasureResultType type);
 }

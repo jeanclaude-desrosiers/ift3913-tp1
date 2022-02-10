@@ -24,9 +24,14 @@ import org.slf4j.LoggerFactory;
  * @author jclaude
  */
 public class App {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
 
+    /**
+     * Entry-point of the program
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         ArgumentParser parser = getParser();
 
