@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -17,15 +19,14 @@ import org.slf4j.Logger;
  *
  * @author jclaude
  */
-public abstract class PackageMeasure extends Measure {
+public abstract class CompositeMeasure extends Measure {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PackageMeasure.class);
-    private final boolean recursive;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompositeMeasure.class);
+    private final List<Measure> subMeasures;
 
-    public PackageMeasure(String name, boolean recursive) {
+    public CompositeMeasure(String name, Measure... subMeasures) {
         super(name);
-
-        this.recursive = recursive;
+        this.subMeasures = Arrays.asList(subMeasures);
     }
 
     /**
@@ -50,17 +51,15 @@ public abstract class PackageMeasure extends Measure {
                         .map(filePath -> getClassMeasure().measureClass(projectPath, projectPath.relativize(filePath)))
                         .forEach(measureResults::add);
 
-                if (recursive) {
-                    // ... optionally measure subpackages ...
-                    Files.list(fullPath)
-                            .filter(Files::isDirectory)
-                            .flatMap(dirPath -> this.measure(projectPath, projectPath.relativize(dirPath)).stream())
-                            .filter(measureResult -> measureResult.getType() == MeasureResultType.PACKAGE)
-                            .forEach(measureResults::add);
-                }
+                // ... Then measure with all subMeasures ...
+                List<MeasureResult> subMeasureResults = subMeasures
+                        .stream()
+                        .flatMap(measure -> measure.measure(projectPath, path).stream())
+                        .filter(measureResult -> measureResult.getType() == MeasureResultType.PACKAGE)
+                        .collect(Collectors.toList());
 
-                // ... Then aggregate into one package measure
-                MeasureResult packageMeasureResult = aggregate(measureResults)
+                // ... Then aggregate into one composite measure
+                MeasureResult packageMeasureResult = aggregate(subMeasureResults)
                         .withName(getName())
                         .withPath(path)
                         .withDescription(getPackageDescription(path))
@@ -75,16 +74,13 @@ public abstract class PackageMeasure extends Measure {
     }
 
     /**
-     * Aggregates the given class measures into a single package measure.
-     * <br>
-     * If the implementation is a measure that counts the number of lines in a
-     * Java package, then this method would sum the numeric results of all the
-     * given MeasureResults
+     * Aggregates the results for given sub measures into a single composed
+     * measure result.
      *
-     * @param measureResults MeasureResults on the contained Java class
+     * @param measureResults MeasureResults on the contained sub measures
      * @return
      */
-    public abstract MeasureResult aggregate(Collection<MeasureResult> measureResults);
+    public abstract MeasureResult aggregate(List<MeasureResult> measureResults);
 
     /**
      * Gets the class measure related to this package measure. This indicates

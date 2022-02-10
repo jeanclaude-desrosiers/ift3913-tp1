@@ -12,12 +12,12 @@ import java.util.Collection;
  */
 public enum MeasureSuite {
     EXAMPLE(new PackageMeasureExample()),
-    ALL(new PackageMeasureCLOC(), new PackageMeasureLOC(), new PackageMeasureDC());
+    ALL(new PackageMeasureCLOC(), new PackageMeasureLOC(), new CompositeMeasureDC());
 
-    private final PackageMeasure[] packageMeasures;
+    private final Measure[] measures;
 
-    private MeasureSuite(PackageMeasure... packageMeasures) {
-        this.packageMeasures = packageMeasures;
+    private MeasureSuite(Measure... measures) {
+        this.measures = measures;
     }
 
     /**
@@ -30,8 +30,8 @@ public enum MeasureSuite {
     public Collection<MeasureResult> runSuite(Path projectPath, Path path) {
         Collection<MeasureResult> measureResults = new ArrayList<>();
 
-        for (PackageMeasure packageMeasure : packageMeasures) {
-            measureResults.addAll(packageMeasure.measure(projectPath, path));
+        for (Measure measure : measures) {
+            measureResults.addAll(measure.measure(projectPath, path));
         }
 
         return measureResults;

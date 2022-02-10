@@ -5,6 +5,8 @@ import ift3913.tp1.data.MeasureResultType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +30,7 @@ public abstract class ClassMeasure extends Measure {
      * @param path The path of the Java file, relative to projectPath
      * @return The MeasureResult on the given file
      */
-    public MeasureResult measure(Path projectPath, Path path) {
+    public MeasureResult measureClass(Path projectPath, Path path) {
         MeasureResult measureResult = new MeasureResult()
                 .withName(getName())
                 .withPath(path)
@@ -47,21 +49,12 @@ public abstract class ClassMeasure extends Measure {
         return measureResult;
     }
 
-    /**
-     * Gets the String class description from a given path.
-     *
-     * @param path The path of the Java file, relative to projectPath
-     * @return The string (e.g. "org.mypackage.myclass")
-     */
-    public static String getClassDescription(Path path) {
-        StringBuilder packageDescription = new StringBuilder();
+    @Override
+    public Collection<MeasureResult> measure(Path projectPath, Path path) {
+        Collection<MeasureResult> measureResults = new ArrayList<>();
+        measureResults.add(measureClass(projectPath, path));
 
-        path.iterator().forEachRemaining(section -> {
-            // The split() is used for the filename only, it will discard the .java part
-            packageDescription.append(section.toString().split("\\.")[0]).append('.');
-        });
-
-        return packageDescription.substring(0, packageDescription.length() - 1);
+        return measureResults;
     }
 
     /**

@@ -10,7 +10,7 @@ import java.util.Collection;
 public class PackageMeasureCLOC extends PackageMeasure {
 
     public PackageMeasureCLOC() {
-        super("paquet_CLOC");
+        super("paquet_CLOC", false);
     }
 
     @Override
