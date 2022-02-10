@@ -32,6 +32,9 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
     @Override
     public void write(Collection<MeasureResult> measureResults, MeasureResultType type) {
         String[] headers = generateHeaders(measureResults, type);
+        
+        String a = "";//";
+        /*   //*/
 
         List<String[]> entries = generateEntries(headers, measureResults);
 

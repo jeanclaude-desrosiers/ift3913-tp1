@@ -10,7 +10,7 @@ import java.util.Collection;
 public class PackageMeasureExample extends PackageMeasure {
 
     public PackageMeasureExample() {
-        super("paquet_LOC");
+        super("paquet_lignes");
     }
 
     @Override

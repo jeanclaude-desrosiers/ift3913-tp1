@@ -4,12 +4,12 @@ package ift3913.tp1.measure;
  *
  * @author jclaude
  */
-public class ClassMeasureExample extends ClassMeasure {
+public class ClassMeasureCLOC extends ClassMeasure {
 
     private int count;
 
-    public ClassMeasureExample() {
-        super("classe_lignes");
+    public ClassMeasureCLOC() {
+        super("classe_CLOC");
 
         count = 0;
     }
