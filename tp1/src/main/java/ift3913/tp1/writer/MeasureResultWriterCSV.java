@@ -89,7 +89,7 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
                 entry[1] = measureResult.getDescription();
 
                 int column = indexOf(headers, measureResult.getName());
-                entry[column] = measureResult.getNumericResult().toString();
+                entry[column] = formatNumber(measureResult.getNumericResult());
             }
 
             entries.add(entry);
@@ -106,6 +106,10 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
         }
 
         return -1;
+    }
+    
+    private static String formatNumber(Number num) {
+        return String.valueOf(Math.round(num.doubleValue() * 100) / 100.);
     }
 
     public Path getWritePath() {

@@ -18,9 +18,9 @@ import org.slf4j.Logger;
  * @author jclaude
  */
 public abstract class PackageMeasure extends Measure {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageMeasure.class);
-    
+
     public PackageMeasure(String name) {
         super(name);
     }
@@ -33,10 +33,10 @@ public abstract class PackageMeasure extends Measure {
      * @return The MeasureResult on the given package and all of the
      * MeasureResult for contained Java classes
      */
-    public final Collection<MeasureResult> measure(Path projectPath, Path path) {
+    public Collection<MeasureResult> measure(Path projectPath, Path path) {
         Path fullPath = projectPath.resolve(path);
         Collection<MeasureResult> measureResults = new ArrayList<>();
-        
+
         if (Files.isDirectory(fullPath)) {
             try {
                 // First measured all files which are Java classes ...
@@ -59,7 +59,7 @@ public abstract class PackageMeasure extends Measure {
                 LOGGER.error("Could not list files", ex);
             }
         }
-        
+
         return measureResults;
     }
 
@@ -69,13 +69,13 @@ public abstract class PackageMeasure extends Measure {
      * @param path The path of the Java package, relative to projectPath
      * @return The string (e.g. "org.mypackage.mysubpackage")
      */
-    private String getPackageDescription(Path path) {
+    public static String getPackageDescription(Path path) {
         StringBuilder packageDescription = new StringBuilder();
-        
+
         path.iterator().forEachRemaining(section -> {
             packageDescription.append(section.toString()).append('.');
         });
-        
+
         return packageDescription.substring(0, packageDescription.length() - 1);
     }
 

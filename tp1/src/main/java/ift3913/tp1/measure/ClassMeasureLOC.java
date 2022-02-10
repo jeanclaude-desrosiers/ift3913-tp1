@@ -2,18 +2,19 @@ package ift3913.tp1.measure;
 
 import ift3913.tp1.parsing.Parser;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author jclaude
  */
-public class ClassMeasureCLOC extends ClassMeasure {
+public class ClassMeasureLOC extends ClassMeasure {
 
     private int count;
     private boolean inComment;
 
-    public ClassMeasureCLOC() {
-        super("classe_CLOC");
+    public ClassMeasureLOC() {
+        super("classe_LOC");
 
         count = 0;
         inComment = false;
@@ -22,23 +23,19 @@ public class ClassMeasureCLOC extends ClassMeasure {
     @Override
     public void consumeLine(String line) {
         List<String> tokens = Parser.tokenize(line, inComment);
-        boolean lineContainsComment = inComment && !tokens.isEmpty();
+        boolean lineContainsCode = false;
 
         for (String token : tokens) {
-            if (!inComment && token.startsWith("/*")) {
-                lineContainsComment = true;
-
-                if (!token.endsWith("*/")) {
-                    inComment = true;
-                }
-            } else if (!inComment && token.startsWith("//")) {
-                lineContainsComment = true;
+            if (!inComment && token.startsWith("/*") && !token.endsWith("*/")) {
+                inComment = true;
+            } else if (!inComment && !token.startsWith("//")) {
+                lineContainsCode = true;
             } else if (inComment && token.endsWith("*/")) {
                 inComment = false;
             }
         }
 
-        if (lineContainsComment) {
+        if (lineContainsCode) {
             count++;
         }
     }

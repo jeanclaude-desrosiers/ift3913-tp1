@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 public enum MeasureSuite {
     EXAMPLE(new PackageMeasureExample()),
-    ALL(new PackageMeasureCLOC());
+    ALL(new PackageMeasureCLOC(), new PackageMeasureLOC(), new PackageMeasureDC());
 
     private final PackageMeasure[] packageMeasures;
 

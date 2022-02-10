@@ -28,7 +28,7 @@ public abstract class ClassMeasure extends Measure {
      * @param path The path of the Java file, relative to projectPath
      * @return The MeasureResult on the given file
      */
-    public final MeasureResult measure(Path projectPath, Path path) {
+    public MeasureResult measure(Path projectPath, Path path) {
         MeasureResult measureResult = new MeasureResult()
                 .withName(getName())
                 .withPath(path)
@@ -53,7 +53,7 @@ public abstract class ClassMeasure extends Measure {
      * @param path The path of the Java file, relative to projectPath
      * @return The string (e.g. "org.mypackage.myclass")
      */
-    private String getClassDescription(Path path) {
+    public static String getClassDescription(Path path) {
         StringBuilder packageDescription = new StringBuilder();
 
         path.iterator().forEachRemaining(section -> {

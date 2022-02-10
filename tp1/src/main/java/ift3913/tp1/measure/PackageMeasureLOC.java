@@ -7,10 +7,10 @@ import java.util.Collection;
  *
  * @author jclaude
  */
-public class PackageMeasureCLOC extends PackageMeasure {
+public class PackageMeasureLOC extends PackageMeasure {
 
-    public PackageMeasureCLOC() {
-        super("paquet_CLOC");
+    public PackageMeasureLOC() {
+        super("paquet_LOC");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PackageMeasureCLOC extends PackageMeasure {
 
     @Override
     public ClassMeasure getClassMeasure() {
-        return new ClassMeasureCLOC();
+        return new ClassMeasureLOC();
     }
 
 }
