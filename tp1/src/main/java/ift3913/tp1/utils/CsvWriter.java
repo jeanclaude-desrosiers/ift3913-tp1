@@ -1,5 +1,7 @@
 package ift3913.tp1.utils;
 
+import ift3913.tp1.model.Element;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
@@ -8,6 +10,7 @@ import java.io.PrintWriter;
  */
 public class CsvWriter {
 
+    private static final String SEPARATEUR = ",";
     private static final String CLASSE_TITRE = "classes.csv";
     private static final String PAQUET_TITRE = "paquets.csv";
     private static final String CLASSE_HEADERS = "chemin,classe,classe_LOC,classe_CLOC,classe_DC,WMC,classe_BC";
@@ -31,32 +34,25 @@ public class CsvWriter {
 
     /**
      * Permet d'ajouter les informations d'un élément sur une ligne dans un rapport csv
-     * @param pw indique dans quel rapport csv écrire (classes ou paquets)
-     * @param chemin indique le chemin de l'élément
-     * @param nom indique le nom de la classe ou paquet
-     * @param nbLignesLoc indique le nombre de lignes de code et de commentaires dans l'élément
-     * @param nbLignesCloc indique le nombre de lignes de commentaires dans l'élément
-     * @param densite indique la densité du code de l'élément
-     * @param complexite indique la complexite du code de l'élément
-     * @param degree indique le degré des commentaires de l'élément
+     * @param pw le print writer de choix qui indique dans quel fichier csv écrire
+     * @param elementAAjouter l'élément a ajouté au rapport csv
      */
-    public static void ecrirePrintWriter(PrintWriter pw,
-                                         String chemin, String nom, int nbLignesLoc, int nbLignesCloc, float densite,
-                                         int complexite, float degree) {
+    public static void ecrirePrintWriter(PrintWriter pw, Element elementAAjouter) {
+
         StringBuilder builder = new StringBuilder();
-        builder.append(chemin);
-        builder.append(",");
-        builder.append(nom);
-        builder.append(",");
-        builder.append(nbLignesLoc);
-        builder.append(",");
-        builder.append(nbLignesCloc);
-        builder.append(",");
-        builder.append(densite);
-        builder.append(",");
-        builder.append(complexite);
-        builder.append(",");
-        builder.append(degree);
+        builder.append(elementAAjouter.getChemin());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getNom());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getNbLignesLoc());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getNbLignesCloc());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getDensite());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getComplexite());
+        builder.append(SEPARATEUR);
+        builder.append(elementAAjouter.getDegre());
         builder.append("\n");
         pw.write(builder.toString());
     }
