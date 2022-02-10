@@ -12,7 +12,9 @@ import java.util.Collection;
  */
 public enum MeasureSuite {
     EXAMPLE(new PackageMeasureExample()),
-    ALL(new PackageMeasureCLOC(), new PackageMeasureLOC(), new CompositeMeasureDC());
+    ALL(new PackageMeasureCLOC(), new PackageMeasureLOC(),
+            new CompositeMeasureDC(), new PackageMeasureWCP(),
+            new CompositeMeasureBC());
 
     private final Measure[] measures;
 
