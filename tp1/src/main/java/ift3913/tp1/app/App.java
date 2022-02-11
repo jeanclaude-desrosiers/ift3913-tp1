@@ -37,7 +37,7 @@ public class App {
 
         try {
             Namespace namespace = parser.parseArgs(args);
-            LOGGER.trace(namespace.toString());
+            LOGGER.debug(namespace.toString());
 
             run(namespace);
         } catch (ArgumentParserException exc) {
@@ -78,11 +78,18 @@ public class App {
     }
 
     private static void run(Namespace namespace) {
-        // Various setup
+        /*
+         * Setup ProjectExplorer to explore the given project path,with a given
+         * set of measures
+         */
         Path projectPath = namespace.get("project_path");
         MeasureSuite measureSuite = namespace.get("measure_suite");
         ProjectExplorer projectExplorer = new ProjectExplorer(projectPath, measureSuite);
+        LOGGER.trace("Created ProjectExplorer");
 
+        /*
+         * Setup output writers for class and package measure results
+         */
         Path classMeasurePath = Paths.get(namespace.get("dir"),
                 namespace.get("suffix") + "classes.csv");
         MeasureResultWriter classMeasureResultWriter = new MeasureResultWriterCSV(classMeasurePath);
@@ -90,8 +97,11 @@ public class App {
         Path packageMeasurePath = Paths.get(namespace.get("dir"),
                 namespace.get("suffix") + "paquets.csv");
         MeasureResultWriter packageMeasureResultWriter = new MeasureResultWriterCSV(packageMeasurePath);
+        LOGGER.trace("Created MeasureResultWriters");
 
-        // Collect and separate results
+        /*
+         * Collect and separate results
+         */
         Collection<MeasureResult> measureResults = projectExplorer.explore();
         Collection<MeasureResult> classMeasureResults = measureResults
                 .stream()
@@ -101,9 +111,13 @@ public class App {
                 .stream()
                 .filter(measure -> measure.getType() == MeasureResultType.PACKAGE)
                 .collect(Collectors.toList());
+        LOGGER.trace("Measured with ProjectExplorer");
 
-        // Write results
+        /*
+         * Write results
+         */
         classMeasureResultWriter.write(classMeasureResults, MeasureResultType.CLASS);
         packageMeasureResultWriter.write(packageMeasureResults, MeasureResultType.PACKAGE);
+        LOGGER.trace("Wrote MeasureResults");
     }
 }

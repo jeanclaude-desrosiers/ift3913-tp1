@@ -2,6 +2,7 @@ package ift3913.tp1.app;
 
 import ift3913.tp1.data.MeasureResult;
 import ift3913.tp1.measure.MeasureSuite;
+import ift3913.tp1.measure.PackageMeasure;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,7 +46,7 @@ public class ProjectExplorer {
 
         Path nextDirectory;
         while ((nextDirectory = directoryDeque.pollFirst()) != null) {
-            if (isJavaPackage(nextDirectory)) {
+            if (PackageMeasure.isJavaPackage(nextDirectory)) {
                 LOGGER.trace("Java Package [" + basePath.relativize(nextDirectory) + "]");
 
                 measureResults.addAll(measureSuite.runSuite(basePath, basePath.relativize(nextDirectory)));
@@ -63,26 +64,6 @@ public class ProjectExplorer {
         }
 
         return measureResults;
-    }
-
-    /**
-     * Checks if a given directory contains at least one *.java file
-     *
-     * @param path directory to check
-     * @return true if at least one Java file, false otherwise
-     */
-    public boolean isJavaPackage(Path path) {
-        try {
-            return Files.list(path)
-                    .filter(Files::isRegularFile)
-                    .map(Path::getFileName)
-                    .filter(filePath -> filePath.toString().endsWith(".java"))
-                    .count() > 0;
-        } catch (IOException ex) {
-            LOGGER.error("Could not check Java package", ex);
-        }
-
-        return false;
     }
 
     public Path getBasePath() {

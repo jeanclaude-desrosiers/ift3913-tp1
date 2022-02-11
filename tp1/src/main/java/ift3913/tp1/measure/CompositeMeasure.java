@@ -15,13 +15,18 @@ import org.slf4j.Logger;
 
 /**
  * Describes a measure on a Java package, as defined by an aggregation of Java
- * class source file measures
+ * class source file measures and package measures
  *
  * @author jclaude
  */
 public abstract class CompositeMeasure extends Measure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompositeMeasure.class);
+
+    /**
+     * Defines the set of measures to take on the Java package, these are then
+     * aggregated by aggregate()
+     */
     private final List<Measure> subMeasures;
 
     public CompositeMeasure(String name, Measure... subMeasures) {
@@ -33,9 +38,10 @@ public abstract class CompositeMeasure extends Measure {
      * Measures a Java package. Also measures all contained Java classes
      *
      * @param projectPath The absolute path to the project root
-     * @param path The path of the Java file, relative to projectPath
-     * @return The MeasureResult on the given package and all of the
-     * MeasureResult for contained Java classes
+     * @param path        The path of the Java file, relative to projectPath
+     *
+     * @return The aggregated MeasureResults (subMeasures) on the given package
+     *         and all of the MeasureResult for contained Java classes
      */
     @Override
     public Collection<MeasureResult> measure(Path projectPath, Path path) {
@@ -44,21 +50,27 @@ public abstract class CompositeMeasure extends Measure {
 
         if (Files.isDirectory(fullPath)) {
             try {
-                // First measured all files which are Java classes ...
+                /*
+                 * First measure all files which are Java classes ...
+                 */
                 Files.list(fullPath)
                         .filter(filePath -> filePath.toString().endsWith(".java"))
                         .filter(Files::isRegularFile)
                         .map(filePath -> getClassMeasure().measureClass(projectPath, projectPath.relativize(filePath)))
                         .forEach(measureResults::add);
 
-                // ... Then measure with all subMeasures ...
+                /*
+                 * ... Then measure the Java package with all subMeasures ...
+                 */
                 List<MeasureResult> subMeasureResults = subMeasures
                         .stream()
                         .flatMap(measure -> measure.measure(projectPath, path).stream())
                         .filter(measureResult -> measureResult.getType() == MeasureResultType.PACKAGE)
                         .collect(Collectors.toList());
 
-                // ... Then aggregate into one composite measure
+                /*
+                 * ... Then aggregate all subMeasures into one composite measure
+                 */
                 MeasureResult packageMeasureResult = aggregate(subMeasureResults)
                         .withName(getName())
                         .withPath(path)
@@ -78,6 +90,7 @@ public abstract class CompositeMeasure extends Measure {
      * measure result.
      *
      * @param measureResults MeasureResults on the contained sub measures
+     *
      * @return
      */
     public abstract MeasureResult aggregate(List<MeasureResult> measureResults);

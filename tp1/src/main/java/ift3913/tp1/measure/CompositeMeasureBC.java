@@ -4,6 +4,11 @@ import ift3913.tp1.data.MeasureResult;
 import java.util.List;
 
 /**
+ * Measures how well commented a Java package is.
+ * <br>
+ * paquet_BC = paquet_DC / paquet_WMC
+ * <br>
+ * See {@link CompositeMeasureDC} and {@link PackageMeasureWCP}
  *
  * @author jclaude
  */
@@ -15,13 +20,13 @@ public class CompositeMeasureBC extends CompositeMeasure {
 
     @Override
     public MeasureResult aggregate(List<MeasureResult> measureResults) {
-        Number packageCLOC = measureResults.get(0).getNumericResult();
-        Number packageLOC = measureResults.get(1).getNumericResult();
+        Number packageDC = measureResults.get(0).getNumericResult();
+        Number packageWCP = measureResults.get(1).getNumericResult();
 
-        Number packageDC = packageCLOC.doubleValue()
-                / packageLOC.doubleValue();
+        Number packageBC = packageDC.doubleValue()
+                / packageWCP.doubleValue();
 
-        return new MeasureResult().withNumericResult(packageDC);
+        return new MeasureResult().withNumericResult(packageBC);
     }
 
     @Override

@@ -2,8 +2,12 @@ package ift3913.tp1.measure;
 
 import ift3913.tp1.data.MeasureResult;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 /**
+ * An example of a package measure.
+ * <br>
+ * Counts the number of lines
  *
  * @author jclaude
  */
@@ -15,12 +19,11 @@ public class PackageMeasureExample extends PackageMeasure {
 
     @Override
     public MeasureResult aggregate(Collection<MeasureResult> measureResults) {
-        int sum = 0;
-        
-        for(MeasureResult measureResult : measureResults) {
-            sum += measureResult.getNumericResult().intValue();
-        }
-        
+        int sum = measureResults
+                .stream()
+                .map(MeasureResult::getNumericResult)
+                .collect(Collectors.summingInt(Number::intValue));
+
         return new MeasureResult().withNumericResult(sum);
     }
 
@@ -28,5 +31,5 @@ public class PackageMeasureExample extends PackageMeasure {
     public ClassMeasure getClassMeasure() {
         return new ClassMeasureExample();
     }
-    
+
 }

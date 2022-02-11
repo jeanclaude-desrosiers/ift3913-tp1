@@ -27,7 +27,8 @@ public abstract class ClassMeasure extends Measure {
      * Measures the source file of a single Java class.
      *
      * @param projectPath The absolute path to the project root
-     * @param path The path of the Java file, relative to projectPath
+     * @param path        The path of the Java file, relative to projectPath
+     *
      * @return The MeasureResult on the given file
      */
     public MeasureResult measureClass(Path projectPath, Path path) {
@@ -49,6 +50,14 @@ public abstract class ClassMeasure extends Measure {
         return measureResult;
     }
 
+    /**
+     * Satisfies Measure's interface. See measureClass()
+     *
+     * @param projectPath The absolute path to the project root
+     * @param path        The path of the Java file, relative to projectPath
+     *
+     * @return The MeasureResult on the given file (in a collection)
+     */
     @Override
     public Collection<MeasureResult> measure(Path projectPath, Path path) {
         Collection<MeasureResult> measureResults = new ArrayList<>();

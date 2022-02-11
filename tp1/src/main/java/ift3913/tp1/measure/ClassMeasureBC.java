@@ -1,10 +1,11 @@
 package ift3913.tp1.measure;
 
-import ift3913.tp1.parsing.Parser;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
+ * Measures how well commented a Java class is.
+ * <br>
+ * classe_BC = classe_DC / classe_WMC
+ * <br>
+ * See {@link ClassMeasureDC} and {@link ClassMeasureWMC}
  *
  * @author jclaude
  */

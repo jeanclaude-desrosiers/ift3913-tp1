@@ -2,22 +2,21 @@ package ift3913.tp1.measure;
 
 import ift3913.tp1.parsing.Parser;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
+ * Measures the number of lines with code on it, in a Java class.
+ * <br>
+ * The class {@link Parser} does most of the heavy-lifting
  *
  * @author jclaude
  */
 public class ClassMeasureLOC extends ClassMeasure {
 
-    private int count;
-    private boolean inComment;
+    private int count = 0;
+    private boolean inComment = false;
 
     public ClassMeasureLOC() {
         super("classe_LOC");
-
-        count = 0;
-        inComment = false;
     }
 
     @Override

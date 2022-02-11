@@ -1,10 +1,11 @@
 package ift3913.tp1.measure;
 
-import ift3913.tp1.parsing.Parser;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
+ * Measures comment density in a Java class.
+ * <br>
+ * classe_DC = classe_CLOC / classe_LOC
+ * <br>
+ * See {@link ClassMeasureCLOC} and {@link ClassMeasureLOC}
  *
  * @author jclaude
  */

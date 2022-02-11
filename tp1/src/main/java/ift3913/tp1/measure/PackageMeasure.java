@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -20,6 +19,12 @@ import org.slf4j.Logger;
 public abstract class PackageMeasure extends Measure {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PackageMeasure.class);
+
+    /**
+     * A non-recursive package aggregates all the measures of contained Java
+     * class, while a recursive one will also aggregate the measure of contained
+     * Java packages
+     */
     private final boolean recursive;
 
     public PackageMeasure(String name, boolean recursive) {
@@ -32,9 +37,10 @@ public abstract class PackageMeasure extends Measure {
      * Measures a Java package. Also measures all contained Java classes
      *
      * @param projectPath The absolute path to the project root
-     * @param path The path of the Java file, relative to projectPath
+     * @param path        The path of the Java file, relative to projectPath
+     *
      * @return The MeasureResult on the given package and all of the
-     * MeasureResult for contained Java classes
+     *         MeasureResult for contained Java classes
      */
     @Override
     public Collection<MeasureResult> measure(Path projectPath, Path path) {
@@ -54,6 +60,7 @@ public abstract class PackageMeasure extends Measure {
                     // ... optionally measure subpackages ...
                     Files.list(fullPath)
                             .filter(Files::isDirectory)
+                            .filter(PackageMeasure::isJavaPackage)
                             .flatMap(dirPath -> this.measure(projectPath, projectPath.relativize(dirPath)).stream())
                             .filter(measureResult -> measureResult.getType() == MeasureResultType.PACKAGE)
                             .forEach(measureResults::add);
@@ -75,6 +82,27 @@ public abstract class PackageMeasure extends Measure {
     }
 
     /**
+     * Checks if a given directory contains at least one *.java file
+     *
+     * @param path directory to check
+     *
+     * @return true if at least one Java file, false otherwise
+     */
+    public static boolean isJavaPackage(Path path) {
+        try {
+            return Files.list(path)
+                    .filter(Files::isRegularFile)
+                    .map(Path::getFileName)
+                    .filter(filePath -> filePath.toString().endsWith(".java"))
+                    .count() > 0;
+        } catch (IOException ex) {
+            LOGGER.error("Could not check Java package", ex);
+        }
+
+        return false;
+    }
+
+    /**
      * Aggregates the given class measures into a single package measure.
      * <br>
      * If the implementation is a measure that counts the number of lines in a
@@ -82,6 +110,7 @@ public abstract class PackageMeasure extends Measure {
      * given MeasureResults
      *
      * @param measureResults MeasureResults on the contained Java class
+     *
      * @return
      */
     public abstract MeasureResult aggregate(Collection<MeasureResult> measureResults);

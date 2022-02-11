@@ -1,12 +1,14 @@
 package ift3913.tp1.measure;
 
 import ift3913.tp1.data.MeasureResult;
-import java.util.Collection;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
+ * Measures comment density in a Java package.
+ * <br>
+ * paquet_DC = paquet_CLOC / paquet_LOC
+ * <br>
+ * See {@link PackageMeasureCLOC} and {@link PackageMeasureLOC}
  *
  * @author jclaude
  */

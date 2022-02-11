@@ -21,16 +21,25 @@ public abstract class Measure {
         this.name = name;
     }
 
+    /**
+     * Measures every object pointed to by path, relative to projectPath
+     *
+     * @param projectPath The absolute path to the project root
+     * @param path        The path of the Java file, relative to projectPath
+     *
+     * @return the MeasureResults for all measured objects
+     */
     public abstract Collection<MeasureResult> measure(Path projectPath, Path path);
 
     public String getName() {
         return name;
     }
-    
+
     /**
      * Gets the String package description from a given path.
      *
      * @param path The path of the Java package, relative to projectPath
+     *
      * @return The string (e.g. "org.mypackage.mysubpackage")
      */
     public static final String getPackageDescription(Path path) {
@@ -42,11 +51,12 @@ public abstract class Measure {
 
         return packageDescription.substring(0, packageDescription.length() - 1);
     }
-    
+
     /**
      * Gets the String class description from a given path.
      *
      * @param path The path of the Java file, relative to projectPath
+     *
      * @return The string (e.g. "org.mypackage.myclass")
      */
     public static final String getClassDescription(Path path) {

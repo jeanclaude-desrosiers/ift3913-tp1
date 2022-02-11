@@ -1,17 +1,18 @@
 package ift3913.tp1.measure;
 
 /**
+ * An example of a class measure.
+ * <br>
+ * Counts the number of lines
  *
  * @author jclaude
  */
 public class ClassMeasureExample extends ClassMeasure {
 
-    private int count;
+    private int count = 0;
 
     public ClassMeasureExample() {
         super("classe_lignes");
-
-        count = 0;
     }
 
     @Override
