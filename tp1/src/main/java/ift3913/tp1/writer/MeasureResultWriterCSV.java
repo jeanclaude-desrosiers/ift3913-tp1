@@ -161,7 +161,7 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
      * @return
      */
     private static String formatNumber(Number num) {
-        return String.valueOf(Math.round(num.doubleValue() * 100) / 100.);
+        return num.toString();
     }
 
     public Path getWritePath() {
