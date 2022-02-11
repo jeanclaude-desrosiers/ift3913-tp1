@@ -18,10 +18,10 @@ public class PackageMeasureWCP extends PackageMeasure {
 
     @Override
     public MeasureResult aggregate(Collection<MeasureResult> measureResults) {
-        int sum = measureResults
+        double sum = measureResults
                 .stream()
                 .map(MeasureResult::getNumericResult)
-                .collect(Collectors.summingInt(Number::intValue));
+                .collect(Collectors.summingDouble(Number::doubleValue));
 
         return new MeasureResult().withNumericResult(sum);
     }

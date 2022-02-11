@@ -90,8 +90,8 @@ public class ClassMeasureWMC extends ClassMeasure {
 
     @Override
     public Number getNumericResult() {
-        return complexityPerMethod.stream()
-                .collect(Collectors.averagingInt(x -> x));
+        return Math.max(1, complexityPerMethod.stream()
+                .collect(Collectors.averagingInt(x -> x)));
     }
 
 }

@@ -1,10 +1,12 @@
 package ift3913.tp1.writer;
 
-import com.opencsv.CSVWriter;
+import com.opencsv.CSVWriterBuilder;
+import com.opencsv.ICSVWriter;
 import ift3913.tp1.data.MeasureResult;
 import ift3913.tp1.data.MeasureResultType;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,8 +43,18 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
          */
         List<String[]> entries = generateEntries(headers, measureResults);
 
-        try (CSVWriter writer = new CSVWriter(new FileWriter(writePath.toString()))) {
+        ICSVWriter writer;
+        try {
+            /*
+             * Creates the necessary directories
+             */
+            Files.createDirectories(writePath.getParent());
+
+            writer = new CSVWriterBuilder(new FileWriter(writePath.toString()))
+                    .withSeparator(';').build();
             entries.forEach(writer::writeNext);
+
+            writer.close();
         } catch (IOException ex) {
             LOGGER.error("Could not write to file", ex);
         }
