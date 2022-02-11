@@ -48,3 +48,13 @@ trouvant sous le chemin (PATH) passé en argument (classes et des paquets respec
  * la densité de commentaire
  * la somme pondérée des complexités cyclomatique de McCabe (WMC)
  * le degré selon lequel un document est bien documenté
+ 
+ Note importante, dans les instructions, nous avons assumé la chose suivante :
+ 
+ - Les mesures paquet_LOC et paquet_CLOC sont calculées comme la somme des classe_LOC et classe_CLOC des classes Java dans le paquet.
+ - La mesure paquet_WCP fonctionne de la même façon, sauf qu'on ajoute aussi le paquet_WCP de tous les sous-paquets.
+ 
+ Si ce n'est pas le comportement voulu :
+ 
+ 1. la branche `genevieve` assume le comportement d'aussi ajouter les "sous-paquets" pour toutes les mesures paquet_LOC, paquet_CLOC et paquet_WCP.
+ 2. le comportement est très facile à changer, il suffit de mettre `recursive` à `true/false` dans les classes `PackageMeasureCLOC`, `PackageMeasureLOC` et/ou `PackageMeasureWCP`, selon ce qui est voulu.
