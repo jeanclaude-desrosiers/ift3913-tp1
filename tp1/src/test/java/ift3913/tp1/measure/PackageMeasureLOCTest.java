@@ -15,7 +15,7 @@ public class PackageMeasureLOCTest {
      * Test of measure method, of class PackageMeasureLOC.
      */
     @Test
-    public void testMeasure_firstDir_shouldBe78() {
+    public void testMeasure_firstDir_shouldBe43() {
         System.out.println("testMeasure_firstDir_shouldBe78");
         PackageMeasureLOC instance = new PackageMeasureLOC();
         Number expected = 78;
@@ -32,7 +32,7 @@ public class PackageMeasureLOCTest {
      * Test of measure method, of class PackageMeasureLOC.
      */
     @Test
-    public void testMeasure_secondDir_shouldBe19() {
+    public void testMeasure_secondDir_shouldBe11() {
         System.out.println("testMeasure_secondDir_shouldBe19");
         PackageMeasureLOC instance = new PackageMeasureLOC();
         Number expected = 19;

@@ -20,22 +20,77 @@ public class TestUtils {
         return Paths.get("src", "test").toAbsolutePath();
     }
 
+    /**
+     * This directory has.
+     *
+     * CLOC = 1 + 15 = 16
+     *
+     * LOC = 36 + 7 = 43
+     *
+     * WMC = 9 + 1 + 1 = 11
+     *
+     * @return
+     */
     public static Path getFirstDir() {
         return Paths.get("resources");
     }
 
+    /**
+     * This file has.
+     *
+     * CLOC = 1
+     *
+     * LOC = 36
+     *
+     * WMC = 5 + 2 + 1 + 1 = 9
+     *
+     * @return
+     */
     public static Path getClasseTestComplexite() {
         return Paths.get("resources", "ClasseTestComplexite.java");
     }
 
+    /**
+     * This file has.
+     *
+     * CLOC = 15
+     *
+     * LOC = 7
+     *
+     * WMC = 1
+     *
+     * @return
+     */
     public static Path getClasseTestPremierNiveau() {
         return Paths.get("resources", "ClasseTestPremierNiveau.java");
     }
 
+    /**
+     * This directory has.
+     *
+     * CLOC = 8
+     *
+     * LOC = 11
+     *
+     * WMC = 1
+     *
+     * @return
+     */
     public static Path getSecondDir() {
         return Paths.get("resources", "deuxiemeNiveau");
     }
 
+    /**
+     * This file has.
+     *
+     * CLOC = 8
+     *
+     * LOC = 11
+     *
+     * WMC = 1
+     *
+     * @return
+     */
     public static Path getClasseTestDeuxiemeNiveau() {
         return Paths.get("resources", "deuxiemeNiveau", "ClasseTestDeuxiemeNiveau.java");
     }

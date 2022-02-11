@@ -13,10 +13,10 @@ public class ClassMeasureLOCTest {
      * Test of getNumericResult method, of class ClassMeasureLOC.
      */
     @Test
-    public void testGetNumericResult_ClasseTestPremierNiveau_shouldBe22() {
-        System.out.println("testGetNumericResult_ClasseTestPremierNiveau_shouldBe22");
+    public void testGetNumericResult_ClasseTestPremierNiveau_shouldBe7() {
+        System.out.println("testGetNumericResult_ClasseTestPremierNiveau_shouldBe7");
         ClassMeasureLOC instance = new ClassMeasureLOC();
-        Number expected = 22;
+        Number expected = 7;
 
         Number actual = instance.measureClass(TestUtils.getResDir(),
                 TestUtils.getClasseTestPremierNiveau()).getNumericResult();
@@ -28,10 +28,10 @@ public class ClassMeasureLOCTest {
      * Test of getNumericResult method, of class ClassMeasureLOC.
      */
     @Test
-    public void testGetNumericResult_ClasseTestDeuxiemeNiveau_shouldBe19() {
-        System.out.println("testGetNumericResult_ClasseTestDeuxiemeNiveau_shouldBe19");
+    public void testGetNumericResult_ClasseTestDeuxiemeNiveau_shouldBe11() {
+        System.out.println("testGetNumericResult_ClasseTestDeuxiemeNiveau_shouldBe11");
         ClassMeasureLOC instance = new ClassMeasureLOC();
-        Number expected = 19;
+        Number expected = 11;
 
         Number actual = instance.measureClass(TestUtils.getResDir(),
                 TestUtils.getClasseTestDeuxiemeNiveau()).getNumericResult();
@@ -43,10 +43,10 @@ public class ClassMeasureLOCTest {
      * Test of getNumericResult method, of class ClassMeasureLOC.
      */
     @Test
-    public void testGetNumericResult_ClasseTestComplexite_shouldBe37() {
-        System.out.println("testGetNumericResult_ClasseTestComplexite_shouldBe37");
+    public void testGetNumericResult_ClasseTestComplexite_shouldBe36() {
+        System.out.println("testGetNumericResult_ClasseTestComplexite_shouldBe36");
         ClassMeasureLOC instance = new ClassMeasureLOC();
-        Number expected = 37;
+        Number expected = 36;
 
         Number actual = instance.measureClass(TestUtils.getResDir(),
                 TestUtils.getClasseTestComplexite()).getNumericResult();

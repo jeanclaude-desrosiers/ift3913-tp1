@@ -15,7 +15,7 @@ public class PackageMeasureWCPTest {
      * Test of measure method, of class PackageMeasureWCP.
      */
     @Test
-    public void testMeasure_firstDir_shouldBe16() {
+    public void testMeasure_firstDir_shouldBe11() {
         System.out.println("testMeasure_firstDir_shouldBe16");
         PackageMeasureWCP instance = new PackageMeasureWCP();
         Number expected = 16;

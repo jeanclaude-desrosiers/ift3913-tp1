@@ -15,10 +15,10 @@ public class PackageMeasureCLOCTest {
      * Test of measure method, of class PackageMeasureCLOC.
      */
     @Test
-    public void testMeasure_firstDir_shouldBe24() {
-        System.out.println("testMeasure_firstDir_shouldBe24");
+    public void testMeasure_firstDir_shouldBe16() {
+        System.out.println("testMeasure_firstDir_shouldBe16");
         PackageMeasureCLOC instance = new PackageMeasureCLOC();
-        Number expected = 24;
+        Number expected = 16;
 
         Collection<MeasureResult> measureResults = instance.measure(TestUtils.getResDir(),
                 TestUtils.getFirstDir());

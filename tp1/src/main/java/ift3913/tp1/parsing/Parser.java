@@ -42,6 +42,10 @@ public final class Parser {
      *         whitespace
      */
     public static List<String> tokenize(String line, boolean alreadyInComment) {
+        /*
+         * Remove start/ending whitespace, empty lines become empty strings
+         */
+        line = line.trim();
         List<String> tokens = new ArrayList<>();
         boolean inString = false;
         boolean inComment = alreadyInComment;
