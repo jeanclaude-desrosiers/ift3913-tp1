@@ -4,6 +4,14 @@ Jean-Claude Desrosiers 20150403
 
 Repo: https://github.com/jeanclaude-desrosiers/ift3913-tp1
 
+Pour obtenir le JAR, il suffit de le télécharger à partir de la section 'Packages' du repo github
+
+Si par contre, on veut compiler le projet par soi-même, on peut faire :
+
+```
+cd ./tp1 ; mvn clean install
+```
+
 Utilisation du JAR :
 
 ```

@@ -5,7 +5,7 @@
 # author : jclaude
 # date : 2022/02/10
 
-jar_version="1.1"
+jar_version="2"
 
 url=https://github.com/jfree/jfreechart.git
 source_root=src/main/java/org/

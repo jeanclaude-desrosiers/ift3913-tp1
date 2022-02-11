@@ -1,14 +1,14 @@
 On a roulé le code jfreechart à partir du paquet src.
 
 Les paquets les moins bien commentés sont:
-jfreechart-master\jfreechart-master\src\main                                                BC = 0.000024436202
-jfreechart-master\jfreechart-master\src\main\java\org\jfree                                 BC = 0.000024440942
-jfreechart-master\jfreechart-master\src\main\java                                           BC = 0.000024436202
+jfree.chart.axis                BC = 0.000535341649619
+jfree.chart.renderer.xy         BC = 0.000579938942075
+jfree.chart.renderer.category   BC = 0.000813949222937
 
 Les classes les moins bien commentés sont:
-jfreechart-master\jfreechart-master\src\main\java\org\jfree\chart\plot\XYPlot.java          BC = 0.0007425133
-jfreechart-master\jfreechart-master\src\main\java\org\jfree\chart\plot\CategoryPlot.java    BC = 0.0006286315
-jfreechart-master\jfreechart-master\src\main\java\org\jfree\data\general\DatasetUtils.java  BC = 0.0010657789
+jfree.chart.plot.XYPlot         BC = 0.001298063994153
+jfree.chart.plot.CategoryPlot   BC = 0.001577086650074
+jfree.data.general.DatasetUtils BC = 0.001873572528958
 
 Les améliorations que l'on propose:
 
