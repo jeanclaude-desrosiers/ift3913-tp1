@@ -33,7 +33,7 @@ named arguments:
 Pour exécuter le code à partir du terminal, dans le dossier qui contient le jar, lancer:
 
 ```
-java -jar tp1-1.1.jar <PATH du dossier à analyser>
+java -jar tp1-2.jar <PATH du dossier à analyser>
 ```
 
 Les fichiers `classes.csv` et `paquets.csv` seront générés dans le même dossier.
