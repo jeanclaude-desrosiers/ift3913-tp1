@@ -1,5 +1,7 @@
 On a ignoré les paquets et classes avec mesure BC = 0, car elles ne possèdent pas de méthodes.
 
+On a roulé le code jfreechart à partir du paquet src.
+
 Les paquets les moins bien commentés sont:
 jfreechart-master\jfreechart-master\src\main                                                BC = 0.000024436202
 jfreechart-master\jfreechart-master\src\main\java\org\jfree                                 BC = 0.000024440942
