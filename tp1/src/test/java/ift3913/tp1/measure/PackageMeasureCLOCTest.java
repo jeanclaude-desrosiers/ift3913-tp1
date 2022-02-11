@@ -22,7 +22,8 @@ public class PackageMeasureCLOCTest {
 
         Collection<MeasureResult> measureResults = instance.measure(TestUtils.getResDir(),
                 TestUtils.getFirstDir());
-        MeasureResult measureResult = TestUtils.getPackageMeasureOnly(measureResults);
+        MeasureResult measureResult = TestUtils.getPackageMeasureOnly(
+                measureResults, TestUtils.getFirstDir());
         Number actual = measureResult.getNumericResult();
 
         assertEquals(expected, actual);
@@ -39,7 +40,8 @@ public class PackageMeasureCLOCTest {
 
         Collection<MeasureResult> measureResults = instance.measure(TestUtils.getResDir(),
                 TestUtils.getSecondDir());
-        MeasureResult measureResult = TestUtils.getPackageMeasureOnly(measureResults);
+        MeasureResult measureResult = TestUtils.getPackageMeasureOnly(
+                measureResults, TestUtils.getSecondDir());
         Number actual = measureResult.getNumericResult();
 
         assertEquals(expected, actual);

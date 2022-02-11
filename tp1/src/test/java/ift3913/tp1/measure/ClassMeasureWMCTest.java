@@ -43,10 +43,10 @@ public class ClassMeasureWMCTest {
      * Test of getNumericResult method, of class ClassMeasureWMC.
      */
     @Test
-    public void testGetNumericResult_ClasseTestComplexite_shouldBe9() {
-        System.out.println("testGetNumericResult_ClasseTestComplexite_shouldBe9");
+    public void testGetNumericResult_ClasseTestComplexite_shouldBe13() {
+        System.out.println("testGetNumericResult_ClasseTestComplexite_shouldBe13");
         ClassMeasureWMC instance = new ClassMeasureWMC();
-        Number expected = 9;
+        Number expected = 13;
 
         Number actual = instance.measureClass(TestUtils.getResDir(),
                 TestUtils.getClasseTestComplexite()).getNumericResult();

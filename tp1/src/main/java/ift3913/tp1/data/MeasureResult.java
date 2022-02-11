@@ -89,7 +89,8 @@ public class MeasureResult {
                 + "name=" + name
                 + ", path=" + path
                 + ", description=" + description
-                + ", numericResult=" + numericResult + '}';
+                + ", numericResult=" + numericResult
+                + ", type=" + type + '}';
     }
 
 }

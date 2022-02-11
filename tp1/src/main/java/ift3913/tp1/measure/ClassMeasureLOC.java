@@ -27,7 +27,7 @@ public class ClassMeasureLOC extends ClassMeasure {
         for (String token : tokens) {
             if (!inComment && token.startsWith("/*") && !token.endsWith("*/")) {
                 inComment = true;
-            } else if (!inComment && !token.startsWith("//")) {
+            } else if (!inComment && !token.startsWith("//") && !token.startsWith("/*")) {
                 lineContainsCode = true;
             } else if (inComment && token.endsWith("*/")) {
                 inComment = false;
@@ -35,7 +35,10 @@ public class ClassMeasureLOC extends ClassMeasure {
         }
 
         if (lineContainsCode) {
+            System.out.println("LOC : " + tokens);
             count++;
+        } else {
+            System.out.println("NOT : " + tokens);
         }
     }
 

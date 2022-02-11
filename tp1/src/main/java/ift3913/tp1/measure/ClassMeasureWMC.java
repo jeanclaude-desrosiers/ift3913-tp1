@@ -25,7 +25,7 @@ public class ClassMeasureWMC extends ClassMeasure {
      * Set of words which produce a branching in Java
      */
     private static final Collection<String> BRANCH_WORDS = Arrays.asList(
-            "if", "while", "case", "for"
+            "if", "while", "case", "for", "try"
     );
 
     /**
@@ -90,8 +90,8 @@ public class ClassMeasureWMC extends ClassMeasure {
 
     @Override
     public Number getNumericResult() {
-        return Math.max(1, complexityPerMethod.stream()
-                .collect(Collectors.averagingInt(x -> x)));
+        return (int) Math.max(1, complexityPerMethod.stream()
+                .collect(Collectors.summingInt(x -> x)));
     }
 
 }

@@ -11,11 +11,11 @@ import java.util.Collection;
  * @author jclaude
  */
 public class TestUtils {
-
+    
     private TestUtils() {
-
+        
     }
-
+    
     public static Path getResDir() {
         return Paths.get("src", "test").toAbsolutePath();
     }
@@ -27,7 +27,7 @@ public class TestUtils {
      *
      * LOC = 36 + 7 = 43
      *
-     * WMC = 9 + 1 + 1 = 11
+     * WCP = 13 + 1 + 1 = 15
      *
      * @return
      */
@@ -42,7 +42,7 @@ public class TestUtils {
      *
      * LOC = 36
      *
-     * WMC = 5 + 2 + 1 + 1 = 9
+     * WMC = 4 (# of methods) + 5 + 2 + 1 + 1 = 13
      *
      * @return
      */
@@ -57,7 +57,7 @@ public class TestUtils {
      *
      * LOC = 7
      *
-     * WMC = 1
+     * WMC = 1 (# of methods)
      *
      * @return
      */
@@ -72,7 +72,7 @@ public class TestUtils {
      *
      * LOC = 11
      *
-     * WMC = 1
+     * WCP = 1
      *
      * @return
      */
@@ -87,18 +87,18 @@ public class TestUtils {
      *
      * LOC = 11
      *
-     * WMC = 1
+     * WMC = 1 (# of methods)
      *
      * @return
      */
     public static Path getClasseTestDeuxiemeNiveau() {
         return Paths.get("resources", "deuxiemeNiveau", "ClasseTestDeuxiemeNiveau.java");
     }
-
-    public static MeasureResult getPackageMeasureOnly(Collection<MeasureResult> measureResults) {
+    
+    public static MeasureResult getPackageMeasureOnly(Collection<MeasureResult> measureResults, Path path) {
         return measureResults
                 .stream()
-                .filter(m -> m.getType() == MeasureResultType.PACKAGE)
+                .filter(m -> m.getPath().equals(path))
                 .findFirst()
                 .orElseThrow();
     }
