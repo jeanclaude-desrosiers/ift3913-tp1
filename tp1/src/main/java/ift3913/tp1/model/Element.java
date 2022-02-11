@@ -129,7 +129,7 @@ public class Element {
     /**
      * Calcule le degré de bons commentaires
      */
-    public float calculeDegreCommentaire() { return division(densite, complexite); }
+    public void calculeDegreCommentaire() { this.degre = division(densite, complexite); }
 
     private float division(float numerateur, int denominateur) {
         if(denominateur != 0)
