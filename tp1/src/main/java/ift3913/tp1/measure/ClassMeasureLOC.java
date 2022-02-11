@@ -35,10 +35,7 @@ public class ClassMeasureLOC extends ClassMeasure {
         }
 
         if (lineContainsCode) {
-            System.out.println("LOC : " + tokens);
             count++;
-        } else {
-            System.out.println("NOT : " + tokens);
         }
     }
 

@@ -51,7 +51,7 @@ public class MeasureResultWriterCSV implements MeasureResultWriter {
             Files.createDirectories(writePath.getParent());
 
             writer = new CSVWriterBuilder(new FileWriter(writePath.toString()))
-                    .withSeparator(';').build();
+                    .withSeparator(',').build();
             entries.forEach(writer::writeNext);
 
             writer.close();
