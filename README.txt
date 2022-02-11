@@ -1,6 +1,6 @@
 Noms des membres de l'équipe:
 Geneviève Paul-Hus 20037331
-Jean-Claude Desrosiers 
+Jean-Claude Desrosiers 20150403
 
 Repo: https://github.com/jeanclaude-desrosiers/ift3913-tp1
 
