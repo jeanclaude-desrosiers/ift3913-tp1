@@ -1,9 +1,19 @@
+On a ignoré les paquets et classes avec mesure BC = 0, car elles ne possèdent pas de méthodes.
+
 Les paquets les moins bien commentés sont:
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\flow					Densité 26%
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\pie					Densité 27%
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\data\category					Densité 29%
+jfreechart-master\jfreechart-master\src\main                                                BC = 0.000024436202
+jfreechart-master\jfreechart-master\src\main\java\org\jfree                                 BC = 0.000024440942
+jfreechart-master\jfreechart-master\src\main\java                                           BC = 0.000024436202
 
 Les classes les moins bien commentés sont:
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\main\java\module-info.java						Densité: 7%
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\renderer\AbstractRendererTest.java		Densité: 20%
-C:\Users\xtota\Downloads\jfreechart-master\jfreechart-master\src\test\java\org\jfree\chart\plot\CategoryPlotTest.java			Densité: 22%
+jfreechart-master\jfreechart-master\src\main\java\org\jfree\chart\plot\XYPlot.java          BC = 0.0007425133
+jfreechart-master\jfreechart-master\src\main\java\org\jfree\chart\plot\CategoryPlot.java    BC = 0.0006286315
+jfreechart-master\jfreechart-master\src\main\java\org\jfree\data\general\DatasetUtils.java  BC = 0.0010657789
+
+Les améliorations que l'on propose:
+
+Le code est généralement bien commenté en terme de javadoc, mais l'ajout de commentaires au sein des fonctions
+complexes seraient nécessaires pour bien comprendre qu'elles sont les conditions à travers lequel le code
+doit passé (selon la complexité de McCabe). Souvent l'information dans la javadoc n'est pas exhaustive pour tous les
+cas. Il faut donc ajouter plus d'information ce qui pourrait aussi aider à débugger le code si jamais son utilisation
+plante dans une de ces méthodes complexes.
