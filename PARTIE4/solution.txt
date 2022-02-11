@@ -1,5 +1,3 @@
-On a ignoré les paquets et classes avec mesure BC = 0, car elles ne possèdent pas de méthodes.
-
 On a roulé le code jfreechart à partir du paquet src.
 
 Les paquets les moins bien commentés sont:

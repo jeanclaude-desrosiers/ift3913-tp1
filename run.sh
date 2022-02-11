@@ -13,6 +13,6 @@ source_root=src/main/java/org/
 echo "Downloading project from $url..."
 git clone "$url" ./temp-project
 
-java -jar "./tp1/target/tp1-$jar_version.jar" "./temp-project/$source_root" -od ./PARTIE4/
+java -jar "./tp1-$jar_version.jar" "./temp-project/$source_root" -od ./PARTIE4/
 
 rm -rf ./temp-project
